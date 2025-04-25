@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./app
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      - TZ=America/Mexico_City
+      - PYTHONUNBUFFERED=1
+      - PREFIX
+      - PROD
+    restart: unless-stopped
