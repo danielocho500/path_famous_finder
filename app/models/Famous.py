@@ -17,5 +17,4 @@ class Famous(BaseModel):
     date_died: Optional[date] = None
     nicknames: Optional[list[str]] = None
     image_url: str = None
-    image_url_small: str = None
     more_info_url: str = None

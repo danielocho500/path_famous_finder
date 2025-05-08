@@ -9,10 +9,10 @@ class PostFamous(BaseModel):
     profile_sumary_description: Optional[str] = ""
     principal_occupation: str
     other_occupations: Optional[list[str]] = []
-    country_code: str
+    country: str
     city_born: str
     date_born: date
     date_died: Optional[date] = None
     nicknames: Optional[list[str]] = []
-    image_url: Optional[str] = None
-    more_info_url: Optional[str] = None
+    image_url: Optional[str] = ""
+    more_info_url: Optional[str] = ""

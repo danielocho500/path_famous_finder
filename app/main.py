@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from tools.logs import configure_logging, LogLevels
-
-from modules.dev.routes import dev_router
+from modules import dev_router
+from modules import famous_router
+from logs.logs import configure_logging, LogLevels
 
 load_dotenv()
 
@@ -23,3 +23,4 @@ app = FastAPI(
 )
 
 app.include_router(dev_router, prefix=f"{PREFIX}/dev", tags=["dev"])
+app.include_router(famous_router, prefix=f"{PREFIX}/famous", tags=["famous"])
