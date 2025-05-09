@@ -43,24 +43,3 @@ async def manage_image_file(image: UploadFile, folder: str) -> tuple[int, str]:
     except Exception as e:
         logging.error(f"Error uploading image: {e}")
         return [500, "Server error: " + str(e)]
-
-async def upload_image_url(image_url: str, folder: str) -> tuple[bool, str]:
-    """
-    Upload an image from a URL to Cloudinary.
-    Args:
-        image_url (str): The URL of the image to upload.
-        folder (str): The folder in which to store the image.
-    Returns:
-        tuple: A tuple containing a boolean indicating success or failure, and the image path.
-    """
-    try:
-        result = cloudinary.uploader.upload(
-            image_url,
-            folder=folder,
-            resource_type="image"
-        )
-
-        return [200, result.get("secure_url")]
-    except Exception as e:
-        logging.error(f"Error uploading image: {e}")
-        return [500, "Server error" ]

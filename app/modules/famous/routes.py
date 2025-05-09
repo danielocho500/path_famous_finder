@@ -1,9 +1,10 @@
 import logging
 from fastapi import APIRouter
 from modules.famous.models import PostFamous
-from modules.shared.validators import get_country_by_code
+from modules.shared.validators import get_country_by_code, is_image_url
 from modules.shared.response import create_json_response
 from services.famous import save_new_famous
+from services.images import upload_image_url
 
 famous_router = APIRouter()
 
@@ -11,7 +12,7 @@ famous_router = APIRouter()
     description="Register a new famous person",
     name="register_famous",
     operation_id="register_famous")
-def register_famous(famous: PostFamous):
+async def register_famous(famous: PostFamous):
     """
     Register a new famous person
     Args:
@@ -22,7 +23,6 @@ def register_famous(famous: PostFamous):
     """
     logging.info(f"Registering famous person: {famous.real_name}")
 
-    # Validaciones
     if famous.real_name == famous.best_known_for:
         return create_json_response(400, {"message": "real_name and best_known_for must be different"})
 
@@ -40,10 +40,14 @@ def register_famous(famous: PostFamous):
             {"message": "principal_occupation and other_occupations must be different"},
         )
 
-    # Llamar al controlador con parámetros seguros
-    status_code, message = save_new_famous(famous, country_code)
+    if not is_image_url(famous.image_url):
+        return create_json_response(400, {"message": "image_url is not valid"})
 
-    if status_code != 200:
-        return 1
+    status_code, famous_id = save_new_famous(famous, country_code)
 
-    return 1
+    if status_code != 201:
+        return create_json_response(status_code, {"error": "server error"})
+
+    await upload_image_url(famous.image_url, "famous", str(famous_id))
+
+    return create_json_response(status_code, {"message":"famoso registrado"})
