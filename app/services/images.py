@@ -3,14 +3,14 @@ from io import BytesIO
 import requests
 from database import cloudinary
 
-async def upload_image_url(image_url: str, folder: str, object_id: str) -> tuple[bool, str]:
+def upload_image_url(image_url: str, folder: str, object_id: str) -> tuple[int, str]:
     """
     Upload an image from a URL to Cloudinary.
     Args:
         image_url (str): The URL of the image to upload.
         folder (str): The folder in which to store the image.
     Returns:
-        tuple: A tuple containing a boolean indicating success or failure, and the image path.
+        tuple: Status code and the uploaded image URL.
     """
 
     object_id = object_id.replace(":", "_")
@@ -31,7 +31,24 @@ async def upload_image_url(image_url: str, folder: str, object_id: str) -> tuple
         )
 
 
-        return [200, result.get("secure_url")]
+        secure_url = result.get("secure_url")
+        if not secure_url:
+            delete_image(folder, object_id)
+            return 500, "Server error"
+
+        return 200, secure_url
     except Exception as e:
         logging.error(f"Error uploading image: {e}")
-        return [500, "Server error" ]
+        return 500, "Server error"
+
+
+def delete_image(folder: str, object_id: str) -> bool:
+    """Remove an uploaded image when its database record cannot be created."""
+    try:
+        result = cloudinary.uploader.destroy(f"{folder}/{object_id}")
+        if result.get("result") in ("ok", "not found"):
+            return True
+        logging.error(f"Could not remove image {folder}/{object_id}: {result}")
+    except Exception as e:
+        logging.error(f"Error removing image {folder}/{object_id}: {e}")
+    return False

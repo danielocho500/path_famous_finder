@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor · Path Finder</title>
+  <link rel="stylesheet" href="./static/editor.css">
+  <script src="./static/editor.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">↗</span><span>Path Finder <small>editor de datos</small></span></div>
+    <nav><button type="button" data-view="entities" class="active">Personas y fuentes</button><button type="button" data-view="connections">Conexiones</button><button type="button" data-view="review">Revisión</button></nav>
+    <a class="api-link" href="./docs" target="_blank" rel="noreferrer">API ↗</a>
+  </header>
+  <main>
+    <div class="intro"><p class="eyebrow">FASE 01 · CURADURÍA MANUAL</p><h1>Una conexión empieza<br>con un hecho verificable.</h1><p>Crea personas, fuentes y contextos. Después registra cada participación con su propia evidencia.</p></div>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+
+    <section id="entities" class="view active">
+      <div class="section-head"><div><p class="eyebrow">BIBLIOTECA</p><h2>Datos base</h2></div><p>Selecciona un registro para editarlo. Los cambios quedan versionados.</p></div>
+      <div class="workspace">
+        <aside class="list-panel"><label for="collection">Colección</label><select id="collection"><option value="people">Personas</option><option value="sources">Fuentes</option><option value="organizations">Organizaciones y equipos</option><option value="works">Obras y proyectos</option><option value="events">Eventos</option></select><label for="search">Buscar por nombre o título</label><input id="search" type="search" placeholder="Escribe para filtrar"><div id="entity-list" class="record-list"></div></aside>
+        <div class="form-panel"><div class="form-head"><div><p class="eyebrow" id="entity-mode">NUEVO REGISTRO</p><h3 id="entity-title">Nueva persona</h3></div><button type="button" id="entity-new" class="subtle">+ Nuevo</button></div><form id="entity-form"><div id="entity-fields" class="field-grid"></div><div class="form-actions"><button type="submit" class="primary">Guardar registro</button></div></form><div id="entity-extras"></div></div>
+      </div>
+    </section>
+
+    <section id="connections" class="view">
+      <div class="section-head"><div><p class="eyebrow">HECHOS DOCUMENTADOS</p><h2>Añadir conexión</h2></div><p>Cada persona vinculada al contexto necesita una fuente y un localizador propios.</p></div>
+      <div class="workspace wide"><div class="form-panel"><div class="form-head"><div><p class="eyebrow" id="fact-mode">NUEVA CONEXIÓN</p><h3>Descripción del hecho</h3></div><button type="button" id="fact-new" class="subtle">+ Nuevo</button></div>
+        <form id="fact-form"><div class="field-grid"><label>Supertipo<select id="supertype" required></select></label><label>Subtipo<select id="type-id" required></select></label><label>Persona principal<input id="subject-search" type="search" placeholder="Buscar persona"><select id="subject-id" required></select></label><label id="object-label">Persona o contexto<input id="object-search" type="search" placeholder="Buscar contexto"><select id="object-id" required></select></label><label>Rol de la persona principal<input id="role" placeholder="p. ej. signatory"></label><label>Bando / lado<input id="side" placeholder="Solo para partidos"></label><label>Desde (año; negativo = AEC)<input id="fact-start" type="number" placeholder="2020"></label><label>Hasta (año; negativo = AEC)<input id="fact-end" type="number" placeholder="2023"></label><label>Fuente de la persona principal<input id="source-search" type="search" placeholder="Buscar fuente"><select id="source-id" required></select></label><label>Localizador en la fuente<input id="source-locator" required placeholder="Página 42, sección 3, minuto 12..."></label><label class="full">Nota<textarea id="fact-note" rows="2" placeholder="Detalle útil para revisar el hecho"></textarea></label><label>Lugar del hecho (nombre)<input id="fact-loc-name" placeholder="p. ej. Palacio de Versalles"></label><label>Ciudad<input id="fact-loc-city" placeholder="p. ej. Versalles"></label><label>País (ISO)<input id="fact-loc-country" placeholder="p. ej. FR"></label><label>Latitud<input id="fact-loc-lat" type="number" step="any" placeholder="48.8049"></label><label>Longitud<input id="fact-loc-lng" type="number" step="any" placeholder="2.1204"></label></div>
+          <fieldset id="peer-fields"><legend>Segunda persona en el mismo contexto (opcional)</legend><p>Úsala para crear ambas participaciones en una operación. Cada una tendrá su propia fuente.</p><div class="field-grid"><label>Segunda persona<input id="peer-search" type="search" placeholder="Buscar persona"><select id="peer-id"></select></label><label>Rol<input id="peer-role" placeholder="p. ej. signatory"></label><label>Bando / lado<input id="peer-side" placeholder="Solo para partidos"></label><label>Fuente<input id="peer-source-search" type="search" placeholder="Buscar fuente"><select id="peer-source-id"></select></label><label class="full">Localizador<input id="peer-source-locator" placeholder="Página, sección, minuto..."></label></div></fieldset>
+          <div class="form-actions"><button type="submit" class="primary">Guardar borrador</button><button type="button" id="fact-verify" class="secondary" hidden>Verificar</button><button type="button" id="fact-archive" class="danger" hidden>Archivar</button></div></form></div>
+        <aside class="tip-panel"><p class="eyebrow">ANTES DE GUARDAR</p><h3 id="preview-title">Elige un subtipo</h3><p id="preview-text">El catálogo define qué contexto y roles necesita cada hecho.</p><div class="tip-rule"></div><p>Una conexión compartida aparece en la vista de revisión cuando sus hechos están verificados y cumplen la regla del subtipo.</p></aside></div>
+    </section>
+
+    <section id="review" class="view"><div class="section-head"><div><p class="eyebrow">CONTROL DE CALIDAD</p><h2>Hechos y conexiones</h2></div><p>Los borradores no producen conexiones; verifica cada participación al revisar sus fuentes.</p></div><div class="workspace"><div class="list-panel"><label for="review-person">Conexiones de una persona</label><input id="review-person-search" type="search" placeholder="Buscar persona"><select id="review-person"></select><div id="connection-list" class="record-list"></div></div><div class="form-panel"><div class="form-head"><div><p class="eyebrow">ÚLTIMOS HECHOS</p><h3>Revisar y corregir</h3></div><button type="button" id="refresh-facts" class="subtle">Actualizar</button></div><div id="fact-list" class="record-list"></div></div></div></section>
+  </main>
+  <footer>Path Finder · Los hechos verificados conservan su historial y sus fuentes.</footer>
+</body>
+</html>
