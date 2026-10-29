@@ -1056,6 +1056,42 @@
       }
     });
 
+    // Mobile touch-swipe support on the bottom event card
+    const encounterCard = document.getElementById("encounter-card");
+    if (encounterCard) {
+      let touchStartX = null;
+      let touchStartY = null;
+      encounterCard.addEventListener(
+        "touchstart",
+        (ev) => {
+          if (ev.touches.length === 1) {
+            touchStartX = ev.touches[0].clientX;
+            touchStartY = ev.touches[0].clientY;
+          }
+        },
+        { passive: true }
+      );
+      encounterCard.addEventListener(
+        "touchend",
+        (ev) => {
+          if (touchStartX == null || !ev.changedTouches.length) return;
+          const dx = ev.changedTouches[0].clientX - touchStartX;
+          const dy = ev.changedTouches[0].clientY - touchStartY;
+          touchStartX = null;
+          touchStartY = null;
+          if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+            const total = state.pathData?.steps?.length || 0;
+            if (dx < 0 && state.currentStepIndex < total - 1) {
+              goToStep(state.currentStepIndex + 1, true);
+            } else if (dx > 0 && state.currentStepIndex > 0) {
+              goToStep(state.currentStepIndex - 1, true);
+            }
+          }
+        },
+        { passive: true }
+      );
+    }
+
     document.addEventListener("keydown", (ev) => {
       const tag = document.activeElement?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;

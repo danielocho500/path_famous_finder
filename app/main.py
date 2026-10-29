@@ -34,7 +34,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Famous Relationship Finder",
     description="Find famous people related to each other.",
-    version="0.4.0",
+    version="0.5.0",
     docs_url= f"{PREFIX}/docs",
     redoc_url= f"{PREFIX}/redoc",
     openapi_url= f"{PREFIX}/openapi.json",
