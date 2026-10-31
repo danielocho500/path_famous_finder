@@ -1,10 +1,12 @@
 import logging
+from uuid import uuid4
 from fastapi import APIRouter
+from starlette.concurrency import run_in_threadpool
 from modules.famous.models import PostFamous
 from modules.shared.validators import get_country_by_code, is_image_url
 from modules.shared.response import create_json_response
 from services.famous import save_new_famous
-from services.images import upload_image_url
+from services.images import delete_image, upload_image_url
 
 famous_router = APIRouter()
 
@@ -43,11 +45,20 @@ async def register_famous(famous: PostFamous):
     if not is_image_url(famous.image_url):
         return create_json_response(400, {"message": "image_url is not valid"})
 
-    status_code, famous_id = save_new_famous(famous, country_code)
+    image_id = uuid4().hex
+    image_status, uploaded_image_url = await run_in_threadpool(
+        upload_image_url, famous.image_url, "famous", image_id
+    )
+    if image_status != 200:
+        return create_json_response(502, {"error": "image upload failed"})
+
+    famous_with_image = famous.model_copy(update={"image_url": uploaded_image_url})
+    status_code, _ = await run_in_threadpool(
+        save_new_famous, famous_with_image, country_code
+    )
 
     if status_code != 201:
+        await run_in_threadpool(delete_image, "famous", image_id)
         return create_json_response(status_code, {"error": "server error"})
-
-    await upload_image_url(famous.image_url, "famous", str(famous_id))
 
     return create_json_response(status_code, {"message":"famoso registrado"})

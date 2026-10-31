@@ -1,12 +1,14 @@
-version: '3.8'
-
 services:
   web:
-    build: ./app
+    build:
+      context: .
+      dockerfile: app/Dockerfile
     ports:
-      - "8004:8000"
+      - "${WEB_BIND_IP:-127.0.0.1}:8004:8000"
     volumes:
       - ./app:/usr/src/app
+    env_file:
+      - .env
     environment:
       - TZ=America/Mexico_City
       - PYTHONUNBUFFERED=1
@@ -19,4 +21,7 @@ services:
       - NEO4J_URI
       - NEO4J_USER
       - NEO4J_PASS
+      - NEO4J_USERNAME
+      - NEO4J_PASSWORD
+      - NEO4J_DATABASE
     restart: unless-stopped

@@ -1,0 +1,676 @@
+"""
+Lote 9: América Precolombina, la Era de las Exploraciones y el Siglo de Oro (~1400 – 1681 d.C.).
+
+Figuras históricas incluidas:
+1. Nezahualcóyotl (Q379964) - Rey de Texcoco, estadista, filósofo y poeta náhuatl.
+2. Pachacútec (Q213758) - 9º Inca del Tahuantinsuyo, constructor de Machu Picchu.
+3. Huáscar (Q213749) - Inca del Tahuantinsuyo en Cuzco.
+4. Atahualpa (Q179577) - Último soberano del Imperio Inca.
+5. Francisco Pizarro (Q44741) - Conquistador de Perú, fundador de Lima.
+6. Diego de Almagro (Q207668) - Adelantado y descubridor de Chile.
+7. Antonio de Mendoza (Q441300) - Primer Virrey de la Nueva España y 2º del Perú.
+8. Fray Juan de Zumárraga (Q442901) - Primer arzobispo de México, introductor de la imprenta.
+9. Fray Bernardino de Sahagún (Q379972) - Franciscano, padre de la antropología del Nuevo Mundo (Códice Florentino).
+10. Inca Garcilaso de la Vega (Q334711) - Cronista e historiador mestizo (Comentarios Reales de los Incas).
+11. Vasco da Gama (Q7328) - Navegante portugués, ruta marítima a la India rodeando África.
+12. Fernando de Magallanes (Q1496) - Comandante de la primera expedición que circunnavegó el planeta.
+13. Juan Sebastián Elcano (Q201510) - Capitán de la nao Victoria que completó la primera vuelta al mundo.
+14. Américo Vespucio (Q47674) - Cosmógrafo y navegante florentino que identificó América como nuevo continente.
+15. Pedro Álvares Cabral (Q174432) - Navegante y explorador portugués, descubridor europeo de Brasil.
+16. Pedro Calderón de la Barca (Q170800) - Dramaturgo y poeta del Siglo de Oro español (La vida es sueño).
+"""
+
+from scripts.batch_loader_utils import driver, ingest_batch
+
+BATCH_NAME = "Lote 9: América Precolombina, la Era de las Exploraciones y el Siglo de Oro (~1400 – 1681 d.C.)"
+
+PEOPLE = [
+    {
+        "wikidata_id": "Q379964",
+        "name": "Nezahualcóyotl",
+        "aliases": ["Acolmiztli Nezahualcóyotl", "El Rey Poeta", "Nezahualcoyotzin"],
+        "principal_occupation": "Rey de Texcoco, filósofo, arquitecto y poeta náhuatl",
+        "description": "Señor de Texcoco y principal aliado de la Triple Alianza mexica; célebre por sus leyes justas, poesía lírica en náhuatl y obras hidráulicas como el albarradón de Tenochtitlan.",
+        "country": "MX",
+        "city_born": "Texcoco",
+        "birth": {"year": 1402, "month": 4, "day": 28, "precision": "day", "approximate": False},
+        "death": {"year": 1472, "month": 6, "day": 4, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q213758",
+        "name": "Pachacútec",
+        "aliases": ["Pachacuti", "Pachacuti Inca Yupanqui", "Cusi Yupanqui"],
+        "principal_occupation": "Noveno Inca del Tahuantinsuyo y organizador del Imperio Incaico",
+        "description": "Transformó el señorío del Cuzco en el vasto Imperio Incaico (Tahuantinsuyo), impulsó la edificación de Machu Picchu, el Sacsayhuamán y la red del Qhapaq Ñan.",
+        "country": "PE",
+        "city_born": "Cuzco",
+        "birth": {"year": 1418, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1471, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q213749",
+        "name": "Huáscar",
+        "aliases": ["Túpac Cusi Hualpa", "Huáscar Inca"],
+        "principal_occupation": "Inca del Tahuantinsuyo en Cuzco",
+        "description": "Soberano inca en Cuzco, hijo de Huayna Cápac; protagonizó la cruenta guerra de sucesión incaica frente a su hermano Atahualpa en vísperas de la llegada española.",
+        "country": "PE",
+        "city_born": "Huascarpata",
+        "birth": {"year": 1490, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1532, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q179577",
+        "name": "Atahualpa",
+        "aliases": ["Atabalipa", "Atahuallpa"],
+        "principal_occupation": "Último soberano del Imperio Incaico",
+        "description": "Vencedor de la guerra civil incaica contra Huáscar; apresado por Francisco Pizarro en la emboscada de Cajamarca de 1532 y ejecutado al año siguiente pese a entregar un rescate en oro y plata.",
+        "country": "PE",
+        "city_born": "Cuzco",
+        "birth": {"year": 1500, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1533, "month": 7, "day": 26, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q44741",
+        "name": "Francisco Pizarro",
+        "aliases": ["Francisco Pizarro González", "Marqués de la Conquista"],
+        "principal_occupation": "Conquistador español del Perú y fundador de Lima",
+        "description": "Lideró la expedición que conquistó el Imperio Inca y fundó la Ciudad de los Reyes (Lima) en 1535; gobernó Nueva Castilla hasta su asesinato en 1541.",
+        "country": "ES",
+        "city_born": "Trujillo",
+        "birth": {"year": 1478, "month": 3, "day": 16, "precision": "day", "approximate": False},
+        "death": {"year": 1541, "month": 6, "day": 26, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q207668",
+        "name": "Diego de Almagro",
+        "aliases": ["El Adelantado Diego de Almagro", "El Viejo"],
+        "principal_occupation": "Conquistador español y adelantado de Nueva Toledo",
+        "description": "Socio de Pizarro en la conquista del Tahuantinsuyo y líder de la primera expedición española a los valles de Chile en 1535.",
+        "country": "ES",
+        "city_born": "Almagro",
+        "birth": {"year": 1475, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1538, "month": 7, "day": 8, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q441300",
+        "name": "Antonio de Mendoza",
+        "aliases": ["Antonio de Mendoza y Pacheco"],
+        "principal_occupation": "Primer Virrey de la Nueva España y segundo Virrey del Perú",
+        "description": "Estadista renacentista que consolidó las instituciones virreinales en Nueva España durante 15 años e impulsó la imprenta, la Real y Pontificia Universidad y las exploraciones al norte.",
+        "country": "ES",
+        "city_born": "Mondéjar",
+        "birth": {"year": 1495, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1552, "month": 7, "day": 21, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q442901",
+        "name": "Fray Juan de Zumárraga",
+        "aliases": ["Juan de Zumárraga", "Protector de los Indios"],
+        "principal_occupation": "Primer arzobispo de México y pionero cultural novohispano",
+        "description": "Fraile franciscano que introdujo la primera imprenta en el continente americano en 1539 y fundó el Colegio de la Santa Cruz de Tlatelolco para la formación de nobles indígenas.",
+        "country": "ES",
+        "city_born": "Durango",
+        "birth": {"year": 1468, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1548, "month": 6, "day": 3, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q379972",
+        "name": "Fray Bernardino de Sahagún",
+        "aliases": ["Bernardino de Rivera", "Padre de la antropología del Nuevo Mundo"],
+        "principal_occupation": "Misionero franciscano, filólogo y etnógrafo",
+        "description": "Autor de la 'Historia general de las cosas de Nueva España' (Códice Florentino), obra maestra trilingüe y fundacional del estudio etnográfico de los pueblos mesoamericanos.",
+        "country": "ES",
+        "city_born": "Sahagún",
+        "birth": {"year": 1499, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1590, "month": 2, "day": 5, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q334711",
+        "name": "Inca Garcilaso de la Vega",
+        "aliases": ["Gómez Suárez de Figueroa", "El Inca Garcilaso"],
+        "principal_occupation": "Escritor, historiador y cronista mestizo hispano-peruano",
+        "description": "Hijo de noble inca y capitán español; primer gran escritor mestizo de América, autor de los 'Comentarios Reales de los Incas' y 'La Florida del Inca'.",
+        "country": "PE",
+        "city_born": "Cuzco",
+        "birth": {"year": 1539, "month": 4, "day": 12, "precision": "day", "approximate": False},
+        "death": {"year": 1616, "month": 4, "day": 23, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q7328",
+        "name": "Vasco da Gama",
+        "aliases": ["Dom Vasco da Gama", "Conde de Vidigueira", "Virrey de la India"],
+        "principal_occupation": "Navegante y explorador portugués",
+        "description": "Comandó la primera flota europea en llegar directamente a la India bordeando el cabo de Buena Esperanza en 1497-1499, inaugurando la ruta marítima del comercio de especias.",
+        "country": "PT",
+        "city_born": "Sines",
+        "birth": {"year": 1469, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1524, "month": 12, "day": 24, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q1496",
+        "name": "Fernando de Magallanes",
+        "aliases": ["Hernando de Magallanes", "Fernão de Magalhães"],
+        "principal_occupation": "Navegante y explorador portugués al servicio de España",
+        "description": "Ideó y comandó la expedición que descubrió el paso interoceánico (estrecho de Magallanes), navegó por vez primera el océano Pacífico e inició la primera circunnavegación del globo.",
+        "country": "PT",
+        "city_born": "Sabrosa",
+        "birth": {"year": 1480, "month": 2, "day": 3, "precision": "day", "approximate": False},
+        "death": {"year": 1521, "month": 4, "day": 27, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q201510",
+        "name": "Juan Sebastián Elcano",
+        "aliases": ["Juan Sebastián del Cano"],
+        "principal_occupation": "Navegante y marino español",
+        "description": "Asumió el mando de la nao Victoria tras la muerte de Magallanes en Mactán y completó con éxito en 1522 la primera circunnavegación de la historia ('Primus circumdedisti me').",
+        "country": "ES",
+        "city_born": "Guetaria",
+        "birth": {"year": 1476, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1526, "month": 8, "day": 4, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q47674",
+        "name": "Américo Vespucio",
+        "aliases": ["Amerigo Vespucci"],
+        "principal_occupation": "Comerciante, navegante y cosmógrafo florentino",
+        "description": "Sus cartas de navegación 'Mundus Novus' y 'Lettera' difundieron que las tierras descubiertas por Colón eran un continente hasta entonces desconocido, bautizado 'América' en su honor en 1507.",
+        "country": "IT",
+        "city_born": "Florencia",
+        "birth": {"year": 1454, "month": 3, "day": 9, "precision": "day", "approximate": False},
+        "death": {"year": 1512, "month": 2, "day": 22, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q174432",
+        "name": "Pedro Álvares Cabral",
+        "aliases": ["Pedro Alvares Cabral", "Comandante de la Segunda Armada"],
+        "principal_occupation": "Fidalgo y navegante portugués",
+        "description": "Comandó la Segunda Armada de la India portuguesa en 1500; desviándose hacia el sudoeste atlántico desembarcó en las costas de la actual Bahía, tomando posesión de Brasil para la Corona portuguesa.",
+        "country": "PT",
+        "city_born": "Belmonte",
+        "birth": {"year": 1467, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "death": {"year": 1520, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        "image_url": None,
+    },
+    {
+        "wikidata_id": "Q170800",
+        "name": "Pedro Calderón de la Barca",
+        "aliases": ["Don Pedro Calderón de la Barca"],
+        "principal_occupation": "Dramaturgo y poeta del Siglo de Oro español",
+        "description": "Cumbre del teatro barroco universal, autor de obras maestras del teatro filosófico y de honor como 'La vida es sueño' y 'El gran teatro del mundo'.",
+        "country": "ES",
+        "city_born": "Madrid",
+        "birth": {"year": 1600, "month": 1, "day": 17, "precision": "day", "approximate": False},
+        "death": {"year": 1681, "month": 5, "day": 25, "precision": "day", "approximate": False},
+        "image_url": None,
+    },
+]
+
+CONNECTIONS = [
+    # 1. Nezahualcóyotl <-> Moctezuma Xocoyotzin
+    {
+        "from_wikidata_id": "Q379964",
+        "from_name": "Nezahualcóyotl",
+        "to_wikidata_id": "Q141791",
+        "to_name": "Moctezuma Xocoyotzin",
+        "type_id": "politics.same_government",
+        "period": {
+            "start": {"year": 1428, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1520, "month": 6, "day": 29, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Texcoco / México-Tenochtitlan", "city": "Texcoco", "country": "MX", "lat": 19.4326, "lng": -99.1332},
+        "context": {
+            "category": "organization",
+            "kind": "government",
+            "name": "Triple Alianza Mexica y el Señorío de Texcoco (Época Clásica Náhuatl)",
+            "description": "Nezahualcóyotl forjó la Triple Alianza con Tenochtitlan, alianza estatal que Moctezuma Xocoyotzin lideró como Huey Tlatoani.",
+        },
+        "note": "Nezahualcóyotl consolidó la alianza tripartita con Tenochtitlan y Tlacopan, marco constitucional mexica bajo el cual gobernó posteriormente su nieto Moctezuma Xocoyotzin.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Nezahualc%C3%B3yotl",
+            "title": "Nezahualcóyotl",
+            "publisher": "Wikipedia",
+            "citation": "Alianza con Tenochtitlan y parentesco imperial mexica.",
+            "locator": "Biografía",
+        },
+    },
+    # 2. Pachacútec <-> Atahualpa
+    {
+        "from_wikidata_id": "Q213758",
+        "from_name": "Pachacútec",
+        "to_wikidata_id": "Q179577",
+        "to_name": "Atahualpa",
+        "type_id": "politics.same_government",
+        "period": {
+            "start": {"year": 1438, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1533, "month": 7, "day": 26, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Cuzco y Machu Picchu", "city": "Cuzco", "country": "PE", "lat": -13.1631, "lng": -72.5450},
+        "context": {
+            "category": "organization",
+            "kind": "government",
+            "name": "Dinastía Imperial de los Sapa Incas y el Tahuantinsuyo (Cuzco y Machu Picchu)",
+            "description": "Pachacútec instituyó la dinastía Hanan Cuzco y la organización imperial del Tahuantinsuyo que culminó con el reinado de Atahualpa.",
+        },
+        "note": "Pachacútec refundó el Curacazgo de Cuzco convirtiéndolo en el Imperio del Tahuantinsuyo, estructura política y dinástica que culminó en 1533 con Atahualpa.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Pachac%C3%BAtec",
+            "title": "Pachacútec",
+            "publisher": "Wikipedia",
+            "citation": "Fundación del Imperio Incaico y sucesión dinástica.",
+            "locator": "Gobierno",
+        },
+    },
+    # 3. Huáscar <-> Atahualpa
+    {
+        "from_wikidata_id": "Q213749",
+        "from_name": "Huáscar",
+        "to_wikidata_id": "Q179577",
+        "to_name": "Atahualpa",
+        "type_id": "politics.same_government",
+        "period": {
+            "start": {"year": 1525, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1532, "month": 11, "day": 1, "precision": "month", "approximate": False},
+        },
+        "location": {"name": "Cuzco / Quito", "city": "Cuzco", "country": "PE", "lat": -13.5319, "lng": -71.9675},
+        "context": {
+            "category": "organization",
+            "kind": "government",
+            "name": "Guerra Civil Incaica y Sucesión del Trono del Tahuantinsuyo",
+            "description": "Hermanos e hijos de Huayna Cápac que se disputaron la corona imperial incaica entre las facciones de Cuzco y Quito.",
+        },
+        "note": "Huáscar y Atahualpa libraron la cruenta guerra dinástica por la mascapaicha incaica tras la muerte de Huayna Cápac, dividiendo el ejército del Tahuantinsuyo.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Guerra_civil_incaica",
+            "title": "Guerra civil incaica",
+            "publisher": "Wikipedia",
+            "citation": "Conflicto dinástico entre Huáscar y Atahualpa.",
+            "locator": "Antecedentes",
+        },
+    },
+    # 4. Atahualpa <-> Francisco Pizarro
+    {
+        "from_wikidata_id": "Q179577",
+        "from_name": "Atahualpa",
+        "to_wikidata_id": "Q44741",
+        "to_name": "Francisco Pizarro",
+        "type_id": "personal.met",
+        "period": {
+            "start": {"year": 1532, "month": 11, "day": 16, "precision": "day", "approximate": False},
+            "end": {"year": 1533, "month": 7, "day": 26, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Plaza Mayor de Cajamarca", "city": "Cajamarca", "country": "PE", "lat": -7.1638, "lng": -78.5128},
+        "context": {
+            "category": "event",
+            "kind": "personal.meeting",
+            "name": "Encuentro y Captura de Atahualpa en Cajamarca",
+            "description": "Encuentro histórico en la plaza de Cajamarca donde Pizarro capturó al soberano incaico tras rechazar el Requerimiento.",
+        },
+        "note": "El 16 de noviembre de 1532 Francisco Pizarro y Atahualpa se encontraron en la plaza de Cajamarca, acontecimiento decisivo de la caída del Imperio Inca.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Captura_de_Atahualpa",
+            "title": "Captura de Atahualpa",
+            "publisher": "Wikipedia",
+            "citation": "Encuentro entre Pizarro y Atahualpa en Cajamarca (1532).",
+            "locator": "Acontecimientos",
+        },
+    },
+    # 5. Francisco Pizarro <-> Diego de Almagro
+    {
+        "from_wikidata_id": "Q44741",
+        "from_name": "Francisco Pizarro",
+        "to_wikidata_id": "Q207668",
+        "to_name": "Diego de Almagro",
+        "type_id": "politics.same_government",
+        "period": {
+            "start": {"year": 1524, "month": 9, "day": 13, "precision": "day", "approximate": False},
+            "end": {"year": 1538, "month": 7, "day": 8, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Ciudad de los Reyes (Lima) / Cuzco", "city": "Lima", "country": "PE", "lat": -12.0464, "lng": -77.0428},
+        "context": {
+            "category": "organization",
+            "kind": "government",
+            "name": "Empresa del Levante y Gobernaciones de Nueva Castilla y Nueva Toledo",
+            "description": "Socios conquistadores que pactaron la expedición del Perú y gobernaron los primeros territorios hispanos en los Andes.",
+        },
+        "note": "Pizarro y Almagro sellaron el Pacto de Panamá para explorar el Mar del Sur y gobernar las demarcaciones virreinales de Nueva Castilla y Nueva Toledo.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Francisco_Pizarro",
+            "title": "Francisco Pizarro",
+            "publisher": "Wikipedia",
+            "citation": "Pacto de Panamá y conquista del Perú con Almagro.",
+            "locator": "Empresa de Levante",
+        },
+    },
+    # 6. Francisco Pizarro <-> Carlos I de España
+    {
+        "from_wikidata_id": "Q44741",
+        "from_name": "Francisco Pizarro",
+        "to_wikidata_id": "Q32500",
+        "to_name": "Carlos I de España",
+        "type_id": "politics.same_meeting",
+        "from_role": "attendee",
+        "to_role": "attendee",
+        "period": {
+            "start": {"year": 1528, "month": 7, "day": 1, "precision": "month", "approximate": False},
+            "end": {"year": 1529, "month": 7, "day": 26, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Alcázar de Toledo", "city": "Toledo", "country": "ES", "lat": 39.8628, "lng": -4.0273},
+        "context": {
+            "category": "event",
+            "kind": "politics.meeting",
+            "name": "Capitulación de Toledo de 1529 para la Conquista del Perú",
+            "description": "Pizarro compareció ante la corte del emperador Carlos I en Toledo para obtener los títulos de gobernador y capitán general de Nueva Castilla.",
+        },
+        "note": "Carlos I recibió en Toledo a Francisco Pizarro en 1528 y rubricó la Capitulación de Toledo concediendo las autorizaciones reales para la conquista del Perú.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Capitulaci%C3%B3n_de_Toledo",
+            "title": "Capitulación de Toledo",
+            "publisher": "Wikipedia",
+            "citation": "Firma del convenio real ante la Corona española en Toledo.",
+            "locator": "Acuerdos",
+        },
+    },
+    # 7. Antonio de Mendoza <-> Hernán Cortés
+    {
+        "from_wikidata_id": "Q441300",
+        "from_name": "Antonio de Mendoza",
+        "to_wikidata_id": "Q7326",
+        "to_name": "Hernán Cortés",
+        "type_id": "politics.same_government",
+        "period": {
+            "start": {"year": 1535, "month": 11, "day": 14, "precision": "day", "approximate": False},
+            "end": {"year": 1547, "month": 12, "day": 2, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Palacio Virreinal / Ciudad de México", "city": "Ciudad de México", "country": "MX", "lat": 19.4326, "lng": -99.1332},
+        "context": {
+            "category": "organization",
+            "kind": "government",
+            "name": "Gobierno Virreinal y Capitanía General de la Nueva España",
+            "description": "Coexistencia institucional entre Antonio de Mendoza como primer virrey y Hernán Cortés como marqués del Valle de Oaxaca y capitán general.",
+        },
+        "note": "Antonio de Mendoza arribó como primer Virrey de la Nueva España en 1535, asumiendo la autoridad real compartiendo demarcación con Hernán Cortés.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Antonio_de_Mendoza_y_Pacheco",
+            "title": "Antonio de Mendoza y Pacheco",
+            "publisher": "Wikipedia",
+            "citation": "Relación institucional con Hernán Cortés en la Nueva España.",
+            "locator": "Virreinato",
+        },
+    },
+    # 8. Fray Juan de Zumárraga <-> Antonio de Mendoza
+    {
+        "from_wikidata_id": "Q442901",
+        "from_name": "Fray Juan de Zumárraga",
+        "to_wikidata_id": "Q441300",
+        "to_name": "Antonio de Mendoza",
+        "type_id": "arts.collaborated_on_work",
+        "from_role": "creator",
+        "to_role": "creator",
+        "period": {
+            "start": {"year": 1536, "month": 1, "day": 6, "precision": "day", "approximate": False},
+            "end": {"year": 1548, "month": 6, "day": 3, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Colegio de la Santa Cruz de Tlatelolco", "city": "Ciudad de México", "country": "MX", "lat": 19.4514, "lng": -99.1386},
+        "context": {
+            "category": "work",
+            "kind": "book",
+            "name": "Colegio de la Santa Cruz de Tlatelolco y la Primera Imprenta del Nuevo Mundo",
+            "description": "Zumárraga y Mendoza fundaron la primera institución superior de América para indígenas y trajeron la imprenta de Juan Pablos a México.",
+        },
+        "note": "El arzobispo Zumárraga y el virrey Mendoza fundaron conjuntamente el Colegio de Santa Cruz de Tlatelolco y establecieron el primer taller de imprenta de América.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Colegio_de_la_Santa_Cruz_de_Tlatelolco",
+            "title": "Colegio de la Santa Cruz de Tlatelolco",
+            "publisher": "Wikipedia",
+            "citation": "Fundación del Colegio de Tlatelolco por Mendoza y Zumárraga.",
+            "locator": "Historia",
+        },
+    },
+    # 9. Fray Bernardino de Sahagún <-> Fray Juan de Zumárraga
+    {
+        "from_wikidata_id": "Q379972",
+        "from_name": "Fray Bernardino de Sahagún",
+        "to_wikidata_id": "Q442901",
+        "to_name": "Fray Juan de Zumárraga",
+        "type_id": "arts.collaborated_on_work",
+        "from_role": "writer",
+        "to_role": "creator",
+        "period": {
+            "start": {"year": 1536, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1548, "month": 6, "day": 3, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Convento de Santiago Tlatelolco", "city": "Ciudad de México", "country": "MX", "lat": 19.4514, "lng": -99.1386},
+        "context": {
+            "category": "work",
+            "kind": "book",
+            "name": "Investigación Etnográfica y Crónica de las Cosas de la Nueva España (Códice Florentino)",
+            "description": "Sahagún enseñó en el Colegio fundado por Zumárraga y recopiló las fuentes náhuatl que dieron origen al Códice Florentino.",
+        },
+        "note": "Fray Bernardino de Sahagún se incorporó al Colegio de Tlatelolco bajo el amparo de Fray Juan de Zumárraga, iniciando la monumental labor de rescate de la lengua náhuatl.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Historia_general_de_las_cosas_de_Nueva_Espa%C3%B1a",
+            "title": "Historia general de las cosas de Nueva España",
+            "publisher": "Wikipedia",
+            "citation": "Elaboración de las investigaciones etnográficas en Tlatelolco.",
+            "locator": "Redacción",
+        },
+    },
+    # 10. Inca Garcilaso de la Vega <-> Pachacútec
+    {
+        "from_wikidata_id": "Q334711",
+        "from_name": "Inca Garcilaso de la Vega",
+        "to_wikidata_id": "Q213758",
+        "to_name": "Pachacútec",
+        "type_id": "arts.collaborated_on_work",
+        "from_role": "writer",
+        "to_role": "creator",
+        "period": {
+            "start": {"year": 1560, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1609, "month": 1, "day": 1, "precision": "year", "approximate": False},
+        },
+        "location": {"name": "Cuzco y Montilla / Córdoba", "city": "Córdoba", "country": "ES", "lat": 37.8882, "lng": -4.7794},
+        "context": {
+            "category": "work",
+            "kind": "book",
+            "name": "Comentarios Reales de los Incas y la Crónica del Tahuantinsuyo",
+            "description": "Garcilaso recopiló los cantares, leyes y hechos de su antepasado imperial Pachacútec, inmortalizándolos en los Comentarios Reales.",
+        },
+        "note": "El Inca Garcilaso dedicó páginas maestras de sus 'Comentarios Reales' a narrar el reinado, las conquistas y las instituciones de Pachacútec.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Comentarios_Reales_de_los_Incas",
+            "title": "Comentarios Reales de los Incas",
+            "publisher": "Wikipedia",
+            "citation": "Crónica de la civilización incaica y el reinado de Pachacútec.",
+            "locator": "Primera parte",
+        },
+    },
+    # 11. Fernando de Magallanes <-> Juan Sebastián Elcano
+    {
+        "from_wikidata_id": "Q1496",
+        "from_name": "Fernando de Magallanes",
+        "to_wikidata_id": "Q201510",
+        "to_name": "Juan Sebastián Elcano",
+        "type_id": "personal.met",
+        "period": {
+            "start": {"year": 1519, "month": 9, "day": 20, "precision": "day", "approximate": False},
+            "end": {"year": 1521, "month": 4, "day": 27, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Sanlúcar de Barrameda / Nao Victoria", "city": "Sanlúcar de Barrameda", "country": "ES", "lat": 36.7781, "lng": -6.3515},
+        "context": {
+            "category": "event",
+            "kind": "personal.meeting",
+            "name": "Expedición de Magallanes-Elcano y Partida de la Armada del Maluco",
+            "description": "Magallanes como capitán general y Elcano como contramaestre zarparon con la flota para buscar el paso occidental hacia las islas Molucas.",
+        },
+        "note": "Magallanes y Juan Sebastián Elcano zarparon de Sanlúcar de Barrameda en 1519 en la expedición de la Armada del Maluco que completó la primera vuelta al mundo.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Expedici%C3%B3n_de_Magallanes-Elcano",
+            "title": "Expedición de Magallanes-Elcano",
+            "publisher": "Wikipedia",
+            "citation": "Composición de la tripulación y liderazgo de la expedición.",
+            "locator": "La expedición",
+        },
+    },
+    # 12. Fernando de Magallanes <-> Carlos I de España
+    {
+        "from_wikidata_id": "Q1496",
+        "from_name": "Fernando de Magallanes",
+        "to_wikidata_id": "Q32500",
+        "to_name": "Carlos I de España",
+        "type_id": "politics.same_meeting",
+        "from_role": "attendee",
+        "to_role": "attendee",
+        "period": {
+            "start": {"year": 1518, "month": 3, "day": 1, "precision": "month", "approximate": False},
+            "end": {"year": 1518, "month": 3, "day": 22, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Corte Real de Valladolid", "city": "Valladolid", "country": "ES", "lat": 41.6523, "lng": -4.7245},
+        "context": {
+            "category": "event",
+            "kind": "politics.meeting",
+            "name": "Capitulaciones de Valladolid de 1518 para la Armada de las Especierías",
+            "description": "El joven rey Carlos I recibió a Magallanes en Valladolid y firmó las capitulaciones reales financiando la armada a las Molucas.",
+        },
+        "note": "Magallanes presentó su plan de navegación hacia las Islas de las Especias ante el rey Carlos I en Valladolid, quien aprobó y financió la expedición.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Fernando_de_Magallanes",
+            "title": "Fernando de Magallanes",
+            "publisher": "Wikipedia",
+            "citation": "Audiencia con Carlos I y firma de capitulaciones en Valladolid.",
+            "locator": "En España",
+        },
+    },
+    # 13. Américo Vespucio <-> Cristóbal Colón
+    {
+        "from_wikidata_id": "Q47674",
+        "from_name": "Américo Vespucio",
+        "to_wikidata_id": "Q7322",
+        "to_name": "Cristóbal Colón",
+        "type_id": "personal.met",
+        "period": {
+            "start": {"year": 1505, "month": 2, "day": 1, "precision": "month", "approximate": False},
+            "end": {"year": 1505, "month": 2, "day": 5, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Sevilla", "city": "Sevilla", "country": "ES", "lat": 37.3891, "lng": -5.9845},
+        "context": {
+            "category": "event",
+            "kind": "personal.meeting",
+            "name": "Encuentros y Correspondencia sobre las Indias Occidentales en Sevilla",
+            "description": "Colón y Vespucio se reunieron en Sevilla; Colón escribió a su hijo Diego elogiando a Vespucio como hombre de bien y gran navegante.",
+        },
+        "note": "Cristóbal Colón y Américo Vespucio mantuvieron una estrecha relación en Sevilla; Colón elogió la pericia náutica de Vespucio en una carta enviada a la Corte.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Am%C3%A9rico_Vespucio",
+            "title": "Américo Vespucio",
+            "publisher": "Wikipedia",
+            "citation": "Carta de recomendación de Cristóbal Colón a favor de Vespucio (1505).",
+            "locator": "Relación con Colón",
+        },
+    },
+    # 14. Vasco da Gama <-> Pedro Álvares Cabral
+    {
+        "from_wikidata_id": "Q7328",
+        "from_name": "Vasco da Gama",
+        "to_wikidata_id": "Q174432",
+        "to_name": "Pedro Álvares Cabral",
+        "type_id": "personal.met",
+        "period": {
+            "start": {"year": 1500, "month": 1, "day": 1, "precision": "month", "approximate": False},
+            "end": {"year": 1500, "month": 3, "day": 9, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Restauraçoes y Astilleros de Belém (Lisboa)", "city": "Lisboa", "country": "PT", "lat": 38.6971, "lng": -9.2064},
+        "context": {
+            "category": "event",
+            "kind": "personal.meeting",
+            "name": "Organización y Partida de la Segunda Armada de la India hacia Calicut y Brasil",
+            "description": "Vasco da Gama asesoró directamente a Cabral sobre las rutas atlánticas, la 'volta do mar' y el aprovisionamiento de la Segunda Armada.",
+        },
+        "note": "Vasco da Gama colaboró estrechamente con Pedro Álvares Cabral en Lisboa para preparar la Segunda Armada de la India, instruyéndolo sobre la navegación atlántica.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Pedro_%C3%81lvares_Cabral",
+            "title": "Pedro Álvares Cabral",
+            "publisher": "Wikipedia",
+            "citation": "Instrucciones de Vasco da Gama a la expedición de Cabral.",
+            "locator": "Preparativos",
+        },
+    },
+    # 15. Vasco da Gama <-> Cristóbal Colón
+    {
+        "from_wikidata_id": "Q7328",
+        "from_name": "Vasco da Gama",
+        "to_wikidata_id": "Q7322",
+        "to_name": "Cristóbal Colón",
+        "type_id": "arts.collaborated_on_work",
+        "from_role": "creator",
+        "to_role": "creator",
+        "period": {
+            "start": {"year": 1492, "month": 8, "day": 3, "precision": "day", "approximate": False},
+            "end": {"year": 1506, "month": 5, "day": 20, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Lisboa y Sevilla (Rutas Oceánicas Ibéricas)", "city": "Lisboa", "country": "PT", "lat": 38.7223, "lng": -9.1393},
+        "context": {
+            "category": "work",
+            "kind": "book",
+            "name": "Rutas Marítimas de la Era de los Descubrimientos y Tratado de Tordesillas",
+            "description": "Las navegaciones transoceánicas pioneras de Colón y Da Gama inauguraron la era de la globalización y dividieron el mundo en Tordesillas.",
+        },
+        "note": "Colón y Da Gama articularon las rutas marítimas pioneras atlántica e índica de las coronas ibéricas, base del Tratado de Tordesillas de 1494.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Tratado_de_Tordesillas",
+            "title": "Tratado de Tordesillas",
+            "publisher": "Wikipedia",
+            "citation": "Reparto de las zonas de navegación atlántica e índica entre España y Portugal.",
+            "locator": "Contexto",
+        },
+    },
+    # 16. Pedro Calderón de la Barca <-> Lope de Vega
+    {
+        "from_wikidata_id": "Q170800",
+        "from_name": "Pedro Calderón de la Barca",
+        "to_wikidata_id": "Q165257",
+        "to_name": "Lope de Vega",
+        "type_id": "arts.collaborated_on_work",
+        "from_role": "writer",
+        "to_role": "writer",
+        "period": {
+            "start": {"year": 1623, "month": 1, "day": 1, "precision": "year", "approximate": False},
+            "end": {"year": 1635, "month": 8, "day": 27, "precision": "day", "approximate": False},
+        },
+        "location": {"name": "Corral del Príncipe / Madrid", "city": "Madrid", "country": "ES", "lat": 40.4154, "lng": -3.7003},
+        "context": {
+            "category": "work",
+            "kind": "book",
+            "name": "Comedia Nueva y Teatro del Siglo de Oro Español en Madrid",
+            "description": "Lope de Vega fundó la Comedia Nueva española que el joven Calderón perfeccionó en los corrales de comedias de Madrid.",
+        },
+        "note": "Lope de Vega reconoció y elogió públicamente el genio dramático del joven Calderón de la Barca en las justas poéticas de San Isidro en Madrid.",
+        "source": {
+            "url": "https://es.wikipedia.org/wiki/Siglo_de_Oro",
+            "title": "Siglo de Oro",
+            "publisher": "Wikipedia",
+            "citation": "La cumbre del teatro barroco con Lope de Vega y Calderón de la Barca.",
+            "locator": "Teatro",
+        },
+    },
+]
+
+
+if __name__ == "__main__":
+    try:
+        ingest_batch(BATCH_NAME, PEOPLE, CONNECTIONS)
+    finally:
+        driver.close()
